@@ -170,7 +170,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 	 * @author risdenkj
 	 * 
 	 */
-	private class BinaryNode {
+	public class BinaryNode {
 		private T element;
 		private BinaryNode left,right;
 		
@@ -379,7 +379,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 	 * @author risdenkj
 	 * 
 	 */
-	private class preOrderTreeIterator implements Iterator<T> {
+	public class preOrderTreeIterator implements Iterator<T> {
 		private Stack<BinaryNode> list = new Stack<BinaryNode>();
 		private BinaryNode node = null;
 		private int mod;
@@ -456,7 +456,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 	 * @author risdenkj
 	 * 
 	 */
-	private class inOrderTreeIterator implements Iterator<T> {
+	public class inOrderTreeIterator implements Iterator<T> {
 		private Stack<BinaryNode> list = new Stack<BinaryNode>();
 		private BinaryNode node = null;
 		private int mod;
