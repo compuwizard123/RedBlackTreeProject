@@ -11,6 +11,7 @@ import java.util.Stack;
  */
 
 public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T> {
+	public enum Color {RED, BLACK}
 	private BinaryNode root;
 	private int modCount = 0;
 	
