@@ -10,7 +10,7 @@ import java.util.Stack;
  * 
  */
 
-public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T> {
+public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<RedBlackTree<T>.BinaryNode> {
 	public enum Color {RED, BLACK}
 	private BinaryNode root;
 	private int modCount = 0;
@@ -37,7 +37,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 	 * 
 	 * @return 	an iterator to traverse the nodes in order 
 	 */
-	public Iterator<T> iterator() {
+	public Iterator<RedBlackTree<T>.BinaryNode> iterator() {
 		return new inOrderTreeIterator(root);
 	}
 	
@@ -46,7 +46,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 	 * 
 	 * @return 	an iterator to traverse the nodes in preorder
 	 */
-	public Iterator<T> preOrderIterator() {
+	public Iterator<RedBlackTree<T>.BinaryNode> preOrderIterator() {
 		return new preOrderTreeIterator(root);
 	}
 	
@@ -90,7 +90,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 		if(root == null) {
 			return temp;
 		}
-		Iterator<T> i = iterator();
+		Iterator<RedBlackTree<T>.BinaryNode> i = iterator();
 		while(i.hasNext()) {
 			temp += "[" + i.next() + "]";
 			if(i.hasNext()) {
@@ -380,7 +380,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 	 * @author risdenkj
 	 * 
 	 */
-	public class preOrderTreeIterator implements Iterator<T> {
+	public class preOrderTreeIterator implements Iterator<RedBlackTree<T>.BinaryNode> {
 		private Stack<BinaryNode> list = new Stack<BinaryNode>();
 		private BinaryNode node = null;
 		private int mod;
@@ -414,7 +414,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 		 * @exception 	ConcurrentModificationException if the BinarySearchTree was modified after initializing the iterator
 		 * @exception 	NoSuchElementException if there are no more elements to return
 		 */
-		public T next() {
+		public BinaryNode next() {
 			if(this.mod != modCount) {
 				throw new ConcurrentModificationException();
 			}
@@ -433,7 +433,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 				list.push(item.left);
 			}
 			node = item;
-			return item.element;
+			return item;
 		}
 		
 		/**
@@ -457,7 +457,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 	 * @author risdenkj
 	 * 
 	 */
-	public class inOrderTreeIterator implements Iterator<T> {
+	public class inOrderTreeIterator implements Iterator<RedBlackTree<T>.BinaryNode> {
 		private Stack<BinaryNode> list = new Stack<BinaryNode>();
 		private BinaryNode node = null;
 		private int mod;
@@ -489,7 +489,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 		 * @exception 	ConcurrentModificationException if the BinarySearchTree was modified after initializing the iterator
 		 * @exception 	NoSuchElementException if there are no more elements to return
 		 */
-		public T next() {
+		public BinaryNode next() {
 			if(this.mod != modCount) {
 				throw new ConcurrentModificationException();
 			}
@@ -500,7 +500,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<T
 			item = list.pop();
 			checkLeft(item.right);
 			node = item;
-			return item.element;
+			return item;
 		}
 
 		/**
