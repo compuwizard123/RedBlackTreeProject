@@ -166,6 +166,11 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		return root.get(item);
 	}
 	
+	// TODO implement
+	public int getRotationCount() {
+		return 0;
+	}
+	
 	/**
 	 * A BinaryNode Implementation Class
 	 * @author risdenkj
@@ -174,6 +179,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 	public class BinaryNode {
 		private T element;
 		private BinaryNode left,right;
+		private Color color;
 		
 		/**
 		 * Constructs a BinaryNode
@@ -185,6 +191,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			element = initelement;
 			left = null;
 			right = null;
+			//color = ;
 		}
 		
 		/**
@@ -337,6 +344,10 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			return node;
 		}
 		
+		public T getElement() {
+			return element;
+		}
+		
 		/**
 		 * Get method that returns a pointer to the item provided
 		 * 
@@ -351,6 +362,10 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			} else {
 				return element;
 			}
+		}
+		
+		public Color getColor() {
+			return color;
 		}
 	}
 	
