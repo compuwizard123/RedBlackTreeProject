@@ -14,6 +14,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 	public enum Color {RED, BLACK};
 	private BinaryNode root;
 	private int modCount = 0;
+	private int rotationCount = 0;
 	
 	/**
 	 * Constructs a BinarySearchTree
@@ -124,15 +125,13 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		}
 		boolean temp;
 		if(root != null) {
-			temp = root.insert(item);
+			temp = root.insert(null, null, item);
 		} else {
-			root = new BinaryNode(item);
+			root = new BinaryNode(item);	
 			modCount++;
 			temp = true;
-		} 
-		if(root.getColor() != Color.BLACK) {
-			root.setColor(Color.BLACK);
 		}
+		root.setColor(Color.BLACK);
 		return temp;
 	}
 	
@@ -171,9 +170,8 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		return root.get(item);
 	}
 	
-	// TODO implement
 	public int getRotationCount() {
-		return 0;
+		return rotationCount;
 	}
 	
 	/**
@@ -196,7 +194,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			element = initelement;
 			left = null;
 			right = null;
-			color = Color.BLACK;
+			color = Color.RED;
 		}
 		
 		/**
@@ -205,7 +203,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		 * @return	string of the current BinaryNode
 		 */
 		public String toString() {
-			String temp = "[" + this.element + ", " + this.color + ", ";
+			String temp = this.element + ", " + this.color + ", ";
 			if(left != null) {
 				temp += left.element;
 			} else {
@@ -217,7 +215,6 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			} else {
 				temp += "null";
 			}
-			temp += "]";
 			return temp;
 		}
 		
@@ -283,26 +280,148 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		 * @param item	item to be inserted as a child to the BinaryNode
 		 * @return 	true if insert successful; false if not
 		 */
-		public boolean insert(T item) {
+		public boolean insert(BinaryNode GP, BinaryNode P, T item) {
+			if(this.getColor() == Color.BLACK && left != null && right != null && left.getColor() == Color.RED && right.getColor() == Color.RED) {
+				if(root != this) {
+					this.setColor(Color.RED);
+				}
+				left.setColor(Color.BLACK);
+				right.setColor(Color.BLACK);
+			}
+			if(P != null) {
+				if(P.getColor() == Color.RED && this.getColor() == Color.RED) {
+					if(GP != null) {
+						if(GP.left == P) {
+							if(P.left == this) {
+								GP = singleRightRotation(GP);
+							} else if(P.right == this) {
+								GP = doubleLeftRotation(GP);
+							}
+						} else if(GP.right == P) {
+							if(P.right == this) {
+								GP = singleLeftRotation(GP);
+							} else if(P.left == this) {
+								GP = doubleRightRotation(GP);
+							}
+						}
+					}
+				}
+			}
 			if(element.compareTo(item) < 0) {
 				if(right != null) {
-					return right.insert(item);
+					return right.insert(P, this, item);
 				} else {
 					right = new BinaryNode(item);
+					if(this.getColor() == Color.RED) {
+						if(P != null) { 
+							if(P.left == this) {
+								P = doubleLeftRotation(P);
+							} else if(P.right == this) {
+								P = singleLeftRotation(P);
+							}
+						}
+					}
 					modCount++;
 					return true;
 				}
 			} else if(element.compareTo(item) > 0){
 				if(left != null) {
-					return left.insert(item);
+					return left.insert(P, this, item);
 				} else {
 					left = new BinaryNode(item);
+					if(this.getColor() == Color.RED) {
+						if(P != null) { 
+							if(P.left == this) {
+								P = singleRightRotation(P);
+							} else if(P.right == this) {
+								P = doubleRightRotation(P);
+							}
+						}
+					}
 					modCount++;
 					return true;
 				}
 			} else {
 				return false;
 			}
+		}
+		
+		/**
+		 * Method that rotates the tree left around the specified
+		 * AVLNode right child.
+		 * @param node The node to rotate around
+		 * @return node An AVLNode that has been rotated
+		 */
+		public BinaryNode singleLeftRotation(BinaryNode node) {			
+			BinaryNode temp1 = node.right;
+			BinaryNode temp2 = new BinaryNode(node.element);
+			
+			Color nodeColor = node.getColor();
+			
+			temp2.left = node.left;
+			temp2.right = temp1.left;
+			node.right = temp1.right;
+			node.element = temp1.element;
+			node.left = temp2;
+			
+			node.setColor(nodeColor);
+			node.left.setColor(temp1.getColor());
+			
+			rotationCount++;
+			return node;
+		}
+		
+		/**
+		 * Method that rotates the tree first left around the specified
+		 * AVLNode left child then right around the specified AVLNode 
+		 * 
+		 * @param node The node to rotate around
+		 * @return node An AVLNode that has been rotated
+		 */
+		public BinaryNode doubleLeftRotation(BinaryNode node) {
+			singleLeftRotation(node.left);
+			singleRightRotation(node);
+			return node;
+		}
+		
+		/*
+		 * Method that rotates the tree right around the specified
+		 * AVLNode left child.
+		 * 
+		 * @param node The node to rotate around
+		 * @return node An AVLNode that has been rotated
+		 */
+		public BinaryNode singleRightRotation(BinaryNode node) {
+			BinaryNode temp1 = node.left;
+			BinaryNode temp2 = new BinaryNode(node.element);
+			
+			Color nodeColor = node.getColor();
+			
+			temp2.right = node.right;
+			temp2.left = temp1.right;
+			node.left = temp1.left;
+			node.element = temp1.element;
+			node.right = temp2;
+			
+			node.setColor(nodeColor);
+			node.right.setColor(temp1.getColor());
+			
+			rotationCount++;
+			return node;
+		}
+		
+		/**
+		 * Method that rotates the tree first right around the specified
+		 * AVLNode right child then left around the specified AVLNode 
+		 * 
+		 * @param node The node to rotate around
+		 * @return node An AVLNode that has been rotated
+		 */
+		public BinaryNode doubleRightRotation(BinaryNode node) {
+			singleRightRotation(node.right);
+			singleLeftRotation(node);
+
+			return node;
 		}
 		
 		/**
