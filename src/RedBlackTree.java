@@ -10,7 +10,7 @@ import java.util.Stack;
  * 
  */
 
-public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<RedBlackTree<T>.BinaryNode> {
+public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<RedBlackTree.BinaryNode> {
 	public enum Color {RED, BLACK};
 	private BinaryNode root;
 	private int modCount = 0;
@@ -38,7 +38,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 	 * 
 	 * @return 	an iterator to traverse the nodes in order 
 	 */
-	public Iterator<RedBlackTree<T>.BinaryNode> inOrderIterator() {
+	public Iterator<RedBlackTree.BinaryNode> inOrderIterator() {
 		return new inOrderTreeIterator(root);
 	}
 	
@@ -47,7 +47,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 	 * 
 	 * @return 	an iterator to traverse the nodes in preorder
 	 */
-	public Iterator<RedBlackTree<T>.BinaryNode>iterator() {
+	public Iterator<RedBlackTree.BinaryNode>iterator() {
 		return new preOrderTreeIterator(root);
 	}
 	
@@ -91,7 +91,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		if(root == null) {
 			return temp;
 		}
-		Iterator<RedBlackTree<T>.BinaryNode> i = iterator();
+		Iterator<RedBlackTree.BinaryNode> i = iterator();
 		while(i.hasNext()) {
 			temp += "[" + i.next() + "]";
 			if(i.hasNext()) {
@@ -536,7 +536,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 	 * @author risdenkj
 	 * 
 	 */
-	public class preOrderTreeIterator implements Iterator<RedBlackTree<T>.BinaryNode> {
+	public class preOrderTreeIterator implements Iterator<RedBlackTree.BinaryNode> {
 		private Stack<BinaryNode> list = new Stack<BinaryNode>();
 		private BinaryNode node = null;
 		private int mod;
@@ -613,7 +613,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 	 * @author risdenkj
 	 * 
 	 */
-	public class inOrderTreeIterator implements Iterator<RedBlackTree<T>.BinaryNode> {
+	public class inOrderTreeIterator implements Iterator<RedBlackTree.BinaryNode> {
 		private Stack<BinaryNode> list = new Stack<BinaryNode>();
 		private BinaryNode node = null;
 		private int mod;
