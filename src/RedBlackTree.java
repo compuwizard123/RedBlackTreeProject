@@ -191,7 +191,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			element = initelement;
 			left = null;
 			right = null;
-			//color = ;
+			color = Color.BLACK;
 		}
 		
 		/**
@@ -366,6 +366,10 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		
 		public Color getColor() {
 			return color;
+		}
+		
+		public void setColor(Color color) {
+			this.color = color;
 		}
 	}
 	
