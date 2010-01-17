@@ -37,7 +37,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 	 * 
 	 * @return 	an iterator to traverse the nodes in order 
 	 */
-	public Iterator<RedBlackTree<T>.BinaryNode> iterator() {
+	public Iterator<RedBlackTree<T>.BinaryNode> inOrderIterator() {
 		return new inOrderTreeIterator(root);
 	}
 	
@@ -46,7 +46,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 	 * 
 	 * @return 	an iterator to traverse the nodes in preorder
 	 */
-	public Iterator<RedBlackTree<T>.BinaryNode> preOrderIterator() {
+	public Iterator<RedBlackTree<T>.BinaryNode>iterator() {
 		return new preOrderTreeIterator(root);
 	}
 	
@@ -122,13 +122,18 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		if(item == null) {
 			throw new IllegalArgumentException();
 		}
+		boolean temp;
 		if(root != null) {
-			return root.insert(item);
+			temp = root.insert(item);
 		} else {
 			root = new BinaryNode(item);
 			modCount++;
-			return true;
+			temp = true;
 		} 
+		if(root.getColor() != Color.BLACK) {
+			root.setColor(Color.BLACK);
+		}
+		return temp;
 	}
 	
 	/**
@@ -200,7 +205,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		 * @return	string of the current BinaryNode
 		 */
 		public String toString() {
-			return element.toString();
+			return "[" + this.element + ", " + this.color + ", " + left.element + ", " + right.element + "]";
 		}
 		
 		/**
