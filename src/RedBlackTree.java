@@ -11,7 +11,7 @@ import java.util.Stack;
  */
 
 public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<RedBlackTree<T>.BinaryNode> {
-	public enum Color {RED, BLACK}
+	public enum Color {RED, BLACK};
 	private BinaryNode root;
 	private int modCount = 0;
 	
@@ -205,7 +205,20 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		 * @return	string of the current BinaryNode
 		 */
 		public String toString() {
-			return "[" + this.element + ", " + this.color + ", " + left.element + ", " + right.element + "]";
+			String temp = "[" + this.element + ", " + this.color + ", ";
+			if(left != null) {
+				temp += left.element;
+			} else {
+				temp += "null";
+			}
+			temp += ", ";
+			if(right != null) {
+				temp += right.element;
+			} else {
+				temp += "null";
+			}
+			temp += "]";
+			return temp;
 		}
 		
 		/**
