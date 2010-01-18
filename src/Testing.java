@@ -17,13 +17,13 @@ public class Testing extends TestCase {
 		RedBlackTree<Integer> t = new RedBlackTree<Integer>();
 		assertTrue(t.insert(5));
 		
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(5);
 		ArrayList<RedBlackTree.Color> cols = new ArrayList<RedBlackTree.Color>();
 		cols.add(RedBlackTree.Color.BLACK);
 		for (int k = 0; k < nums.size(); k++){
-			RedBlackTree<Integer>.BinaryNode temp = i.next();
+			RedBlackTree.BinaryNode temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
 			assertEquals(cols.get(k), temp.getColor());
 		}
@@ -39,7 +39,7 @@ public class Testing extends TestCase {
 		assertTrue(t.insert(20));
 		assertTrue(t.insert(5));
 		
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(10);
 		nums.add(5);
@@ -48,7 +48,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.RED);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -81,7 +81,7 @@ public class Testing extends TestCase {
 		t.insert(4);
 		t.insert(5);
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(2);
 		nums.add(1);
@@ -94,7 +94,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.RED);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -111,7 +111,7 @@ public class Testing extends TestCase {
 		t.insert(2);
 		t.insert(3);
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(2);
 		nums.add(1);
@@ -120,7 +120,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.RED);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -138,7 +138,7 @@ public class Testing extends TestCase {
 		}
 		assertFalse(t.insert(7));
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(4);
 		nums.add(2);
@@ -155,7 +155,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.BLACK);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -166,10 +166,10 @@ public class Testing extends TestCase {
 		points += 5;
 	}
 
-	public static void nums(int lower, int upper, Iterator<RedBlackTree<Integer>.BinaryNode> i){
+	public static void nums(int lower, int upper, Iterator<RedBlackTree.BinaryNode> i){
 		if (lower > upper) return;
 		int mid = (lower + upper)/2;
-		//assertEquals(mid, i.next().getElement());
+		assertEquals(mid, i.next().getElement());
 		nums(lower, mid - 1, i);
 		nums(mid + 1, upper, i);
 	}
@@ -227,7 +227,7 @@ public class Testing extends TestCase {
 		t.insert(2);
 		t.insert(1);
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(4);
 		nums.add(2);
@@ -241,7 +241,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.BLACK);
 
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -258,7 +258,7 @@ public class Testing extends TestCase {
 		t.insert(2);
 		t.insert(1);
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(2);
 		nums.add(1);
@@ -267,7 +267,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.RED);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -285,7 +285,7 @@ public class Testing extends TestCase {
 		}
 		assertFalse(t.insert(1));
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(4);
 		nums.add(2);
@@ -302,7 +302,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.BLACK);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -345,7 +345,7 @@ public class Testing extends TestCase {
 		t.insert(3);
 		t.insert(4);
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(2);
 		nums.add(1);
@@ -359,7 +359,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.RED);
 
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -376,7 +376,7 @@ public class Testing extends TestCase {
 		t.insert(3);
 		t.insert(2);
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(2);
 		nums.add(1);
@@ -385,7 +385,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.RED);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -408,7 +408,7 @@ public class Testing extends TestCase {
 		assertTrue(t.insert(4));
 		assertFalse(t.insert(5));
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(4);
 		nums.add(2);
@@ -425,7 +425,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.BLACK);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -446,7 +446,7 @@ public class Testing extends TestCase {
 		t.insert(1);
 		t.insert(2);
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(4);
 		nums.add(2);
@@ -460,7 +460,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.BLACK);
 
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -477,7 +477,7 @@ public class Testing extends TestCase {
 		t.insert(1);
 		t.insert(2);
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(2);
 		nums.add(1);
@@ -486,7 +486,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.RED);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
@@ -508,7 +508,7 @@ public class Testing extends TestCase {
 		assertTrue(t.insert(4));
 		assertFalse(t.insert(3));
 
-		Iterator<RedBlackTree<Integer>.BinaryNode> i = t.iterator();
+		Iterator<RedBlackTree.BinaryNode> i = t.iterator();
 		ArrayList<Integer> nums = new ArrayList<Integer>();
 		nums.add(4);
 		nums.add(2);
@@ -525,7 +525,7 @@ public class Testing extends TestCase {
 		cols.add(RedBlackTree.Color.RED);
 		cols.add(RedBlackTree.Color.BLACK);
 		cols.add(RedBlackTree.Color.BLACK);
-		RedBlackTree<Integer>.BinaryNode temp;
+		RedBlackTree.BinaryNode temp;
 		for (int k = 0; k < nums.size(); k++){
 			temp = i.next();
 			assertEquals(nums.get(k), temp.getElement());
