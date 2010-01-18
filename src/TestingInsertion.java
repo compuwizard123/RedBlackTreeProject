@@ -3,7 +3,7 @@ import java.util.Iterator;
 
 import junit.framework.*;
 
-public class Testing extends TestCase {
+public class TestingInsertion extends TestCase {
 	
 	private static int points = 0;
 
@@ -565,7 +565,7 @@ public class Testing extends TestCase {
 	}
 
 	public static void main(String args[]) {
-		junit.swingui.TestRunner.run(Testing.class);
+		junit.swingui.TestRunner.run(TestingInsertion.class);
 	}
 }
 
