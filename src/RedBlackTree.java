@@ -591,12 +591,12 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 				if(left != null) {
 					return left.removeStep2(this, item, mod);
 				}
-				return this;
+				return P;
 			} else {
 				if(right != null) {
 					return right.removeStep2(this, item, mod);
 				}
-				return this;
+				return P;
 			}
 		}
 
@@ -637,7 +637,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		private BinaryNode removeStep3(BinaryNode P, T item, modWrapper mod) {
 			if(left != null && right != null) {
 				BinaryNode temp = findLargestChild(left);
-				root.removeStep2(null, temp.element, mod);
+				this.removeStep2(null, temp.element, mod);
 				element = temp.element;
 				mod.setTrue();
 				return this;
@@ -650,7 +650,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 					}
 				}
 				mod.setTrue();
-				return null;
+				return P;
 			} else {
 				if(left != null) {
 					element = left.element;
@@ -748,8 +748,8 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		public preOrderTreeIterator(BinaryNode node) {
 			if(node != null) {
 				list.push(node);
-				this.mod = modCount;
 			}
+			this.mod = modCount;
 		}
 		
 		/**

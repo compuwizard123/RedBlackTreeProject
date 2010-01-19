@@ -124,8 +124,10 @@ public class TestingRemoval extends TestCase {
 		b.insert(25);
 		b.insert(5);
 		b.insert(5);
+		System.out.println(b);
 		//b.remove(40);
 		b.remove(15);
+		System.out.println(b);
 
 		Iterator<RedBlackTree.BinaryNode> it = b.iterator();
 		ArrayList<Object> t = new ArrayList<Object>();
@@ -349,7 +351,9 @@ public class TestingRemoval extends TestCase {
 		b.insert(40);
 		b.insert(5);
 		b.insert(2);
+		System.out.println(b);
 		b.remove(15);
+		System.out.println(b);
 
 		Iterator<RedBlackTree.BinaryNode> it = b.iterator();
 		ArrayList<Object> t = new ArrayList<Object>();
@@ -428,8 +432,9 @@ public class TestingRemoval extends TestCase {
 		b.insert(40);
 		b.insert(5);
 		b.insert(12);
-
+		System.out.println(b);
 		b.remove(5);
+		System.out.println(b);
 
 		
 		Iterator<RedBlackTree.BinaryNode> it = b.iterator();
@@ -511,7 +516,9 @@ public class TestingRemoval extends TestCase {
 			b.insert(25);
 			b.insert(40);
 			b.insert(5);
+			System.out.println(b);
 			b.remove(15);
+			System.out.println(b);
 	
 			Iterator<RedBlackTree.BinaryNode> it = b.iterator();
 			ArrayList<Object> t = new ArrayList<Object>();
@@ -661,7 +668,9 @@ public class TestingRemoval extends TestCase {
 		b.insert(15);
 		b.insert(40);
 		b.insert(5);
+		System.out.println(b);
 		b.remove(40);
+		System.out.println(b);
 	
 		Iterator<RedBlackTree.BinaryNode> it = b.iterator();
 		ArrayList<Object> t = new ArrayList<Object>();
