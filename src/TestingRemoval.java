@@ -29,26 +29,57 @@ public class TestingRemoval extends TestCase {
 	
 	public void testRemoveSecondElementOrRoot(){
 		// create test data
-		RedBlackTree<Integer> t = new RedBlackTree<Integer>();
-		t.insert(20);
-		t.insert(10);
-		System.out.println(t);
-		t.remove(10);
-		System.out.println(t);	
-		t.insert(10);
-		System.out.println(t);
-		t.remove(20);
-		System.out.println(t);
-		t = new RedBlackTree<Integer>();
-		t.insert(20);
-		t.insert(10);
-		System.out.println(t);
-		t.remove(5);
-		System.out.println(t);
-		t.remove(15);
-		System.out.println(t);
-		t.remove(30);
-		System.out.println(t);
+		RedBlackTree<Integer> b = new RedBlackTree<Integer>();
+		b.insert(20);
+		b.insert(10);
+		b.remove(10);
+		Iterator<RedBlackTree.BinaryNode> it = b.iterator();
+		RedBlackTree.BinaryNode temp = it.next();
+		assertEquals(RedBlackTree.Color.BLACK, temp.getColor());
+		assertEquals(20, temp.getElement());
+		assertFalse(it.hasNext());
+		
+		b.insert(10);
+		b.remove(20);
+		it = b.iterator();
+		temp = it.next();
+		assertEquals(RedBlackTree.Color.BLACK, temp.getColor());
+		assertEquals(10, temp.getElement());
+		assertFalse(it.hasNext());		
+		
+		b = new RedBlackTree<Integer>();
+		b.insert(20);
+		b.insert(10);
+		b.remove(5);
+		it = b.iterator();
+		temp = it.next();
+		assertEquals(RedBlackTree.Color.BLACK, temp.getColor());
+		assertEquals(20, temp.getElement());
+		temp = it.next();
+		assertEquals(RedBlackTree.Color.RED, temp.getColor());
+		assertEquals(10, temp.getElement());
+		assertFalse(it.hasNext());
+		
+		b.remove(15);
+		it = b.iterator();
+		temp = it.next();
+		assertEquals(RedBlackTree.Color.BLACK, temp.getColor());
+		assertEquals(20, temp.getElement());
+		temp = it.next();
+		assertEquals(RedBlackTree.Color.RED, temp.getColor());
+		assertEquals(10, temp.getElement());
+		assertFalse(it.hasNext());
+		
+		b.remove(30);
+		it = b.iterator();
+		temp = it.next();
+		assertEquals(RedBlackTree.Color.BLACK, temp.getColor());
+		assertEquals(20, temp.getElement());
+		temp = it.next();
+		assertEquals(RedBlackTree.Color.RED, temp.getColor());
+		assertEquals(10, temp.getElement());
+		assertFalse(it.hasNext());
+		
 		// do symmetric cases.
 
 	}
@@ -238,7 +269,9 @@ public class TestingRemoval extends TestCase {
 		b.insert(25);
 		b.insert(5);
 		b.insert(5);
+		System.out.println(b);
 		b.remove(17);
+		System.out.println(b);
 
 		it = b.iterator();
 		t = new ArrayList<Object>();
@@ -479,7 +512,7 @@ public class TestingRemoval extends TestCase {
 			b.insert(40);
 			b.insert(5);
 			b.remove(15);
-
+	
 			Iterator<RedBlackTree.BinaryNode> it = b.iterator();
 			ArrayList<Object> t = new ArrayList<Object>();
 			t.add(RedBlackTree.Color.BLACK);
@@ -550,22 +583,25 @@ public class TestingRemoval extends TestCase {
 			b.insert(25);
 			b.insert(40);
 			b.insert(40);
-			b.remove(25);
+
+			//b.remove(25);
+			b.remove(20);
+
 			
 			it = b.iterator();
 			t = new ArrayList<Object>();
 			t.add(RedBlackTree.Color.BLACK);
-			t.add(RedBlackTree.Color.BLACK);
-			t.add(RedBlackTree.Color.RED);
 			t.add(RedBlackTree.Color.RED);
 			t.add(RedBlackTree.Color.BLACK);
 			t.add(RedBlackTree.Color.RED);
+			t.add(RedBlackTree.Color.BLACK);
+			t.add(RedBlackTree.Color.BLACK);
 			s = new ArrayList<Object>();
-			s.add(20);
+			s.add(30);
+			s.add(15);
 			s.add(10);
 			s.add(5);
-			s.add(15);
-			s.add(30);
+			s.add(25);
 			s.add(40);		
 			for (int i = 0; i < s.size(); i++){
 				RedBlackTree.BinaryNode temp = it.next();
@@ -745,10 +781,13 @@ public class TestingRemoval extends TestCase {
 
 	}
 	
+	// test some rotations involving root
 
+	
 
+	
 	public void testDoNothing(){
-		System.out.println(points);
+		System.out.println("Points: " + points);
 		//System.out.println("Recolor outside of single rotations.");
 	}
 
