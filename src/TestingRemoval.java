@@ -269,7 +269,9 @@ public class TestingRemoval extends TestCase {
 		b.insert(25);
 		b.insert(5);
 		b.insert(5);
+		System.out.println(b);
 		b.remove(17);
+		System.out.println(b);
 
 		it = b.iterator();
 		t = new ArrayList<Object>();
@@ -383,7 +385,9 @@ public class TestingRemoval extends TestCase {
 		b.insert(40);
 		b.insert(5);
 		b.insert(45);
+
 		b.remove(25);
+
 		
 		//testing single rotation with right child
 		it = b.iterator();
@@ -424,7 +428,9 @@ public class TestingRemoval extends TestCase {
 		b.insert(40);
 		b.insert(5);
 		b.insert(12);
+
 		b.remove(5);
+
 		
 		Iterator<RedBlackTree.BinaryNode> it = b.iterator();
 		ArrayList<Object> t = new ArrayList<Object>();
@@ -540,6 +546,7 @@ public class TestingRemoval extends TestCase {
 			b.insert(40);
 			b.insert(5);
 			b.insert(17);
+
 			b.remove(17);
 			
 			it = b.iterator();
@@ -578,9 +585,8 @@ public class TestingRemoval extends TestCase {
 			b.insert(40);
 
 			//b.remove(25);
-			System.out.println(b);
 			b.remove(20);
-			System.out.println(b);
+
 			
 			it = b.iterator();
 			t = new ArrayList<Object>();
@@ -655,9 +661,7 @@ public class TestingRemoval extends TestCase {
 		b.insert(15);
 		b.insert(40);
 		b.insert(5);
-		System.out.println(b);
 		b.remove(40);
-		System.out.println(b);
 	
 		Iterator<RedBlackTree.BinaryNode> it = b.iterator();
 		ArrayList<Object> t = new ArrayList<Object>();
