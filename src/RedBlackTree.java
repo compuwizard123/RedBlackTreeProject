@@ -360,16 +360,11 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			BinaryNode temp1 = node.right;
 			BinaryNode temp2 = new BinaryNode(node.element);
 			
-			Color nodeColor = node.getColor();
-			
 			temp2.left = node.left;
 			temp2.right = temp1.left;
 			node.right = temp1.right;
 			node.element = temp1.element;
 			node.left = temp2;
-			
-			//node.setColor(nodeColor);
-			//node.left.setColor(temp1.getColor());
 			
 			rotationCount++;
 			return node;
@@ -399,16 +394,11 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			BinaryNode temp1 = node.left;
 			BinaryNode temp2 = new BinaryNode(node.element);
 			
-			Color nodeColor = node.getColor();
-			
 			temp2.right = node.right;
 			temp2.left = temp1.right;
 			node.left = temp1.left;
 			node.element = temp1.element;
 			node.right = temp2;
-			
-			//node.setColor(nodeColor);
-			//node.right.setColor(temp1.getColor());
 			
 			rotationCount++;
 			return node;
@@ -605,7 +595,8 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 					if(left.getColor() == Color.RED) {
 						left = left.removeStep2B1(this, item, mod);
 					} else {
-						left = left.removeStep2B2(this, item, mod);
+						P = left.removeStep2B2(this, item, mod);
+						return P;
 					}
 					return this;
 				}
@@ -614,7 +605,8 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 					if(right.getColor() == Color.RED) {
 						right = right.removeStep2B1(this, item, mod);
 					} else {
-						right = right.removeStep2B2(this, item, mod);
+						P = right.removeStep2B2(this, item, mod);
+						return P;
 					}
 					return this;
 				}
@@ -630,18 +622,17 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 				if(left != null) {
 					left = left.removeStep2(this, item, mod);
 				}
-				return this;
 			} else {
 				if(right != null) {
 					right = right.removeStep2(this, item, mod);
 				}
-				return this;
 			}
+			return this;
 		}
 
 		private BinaryNode removeStep2B2(BinaryNode P, T item, modWrapper mod) {
-			BinaryNode S = P;
-			if(P.left != null && P == this){
+			BinaryNode S;
+			if(P.left != null && P.left == this){
 				S = rotateLeftSimple(P);
 				P = S.left;
 			} else {
@@ -650,12 +641,18 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			}
 			S.setColor(Color.BLACK);
 			P.setColor(Color.RED);
-			return this.removeStep2(P, item, mod);
+			if(P.right == this) {
+				P.right = this.removeStep2(P, item, mod);
+			} else {
+				P.left = this.removeStep2(P, item, mod);
+			}
+			return S;
 		}
 		
 		private BinaryNode rotateLeftSimple(BinaryNode node) {
 			BinaryNode S = node.right;
-			BinaryNode P = node;
+			BinaryNode P = new BinaryNode(node.element);
+			P.left = node.left;
 			P.right = S.left;
 			node.right = S.right;
 			node.element = S.element;
@@ -665,7 +662,8 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		
 		private BinaryNode rotateRightSimple(BinaryNode node) {
 			BinaryNode S = node.left;
-			BinaryNode P = node;
+			BinaryNode P = new BinaryNode(node.element);
+			P.right = node.right;
 			P.left = S.right;
 			node.right = P;
 			node.element = S.element;
@@ -675,23 +673,23 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		
 		private BinaryNode removeStep3(BinaryNode P, T item, modWrapper mod) {
 			if(left != null && right != null) {
+				T tempelement = element;
 				BinaryNode temp = findLargestChild(left);
 				this.removeStep2(P, temp.element, mod);
-				element = temp.element;
+				if(this.element == tempelement) {
+					element = temp.element;
+				} else {
+					if(left != null && left.element == tempelement) {
+						left.element = temp.element;
+					} else {
+						right.element = temp.element;
+					}
+				}
 				mod.setTrue();
 				return this;
 			} else if(left == null && right == null) {
 				mod.setTrue();
 				return null;
-//				if(P != null) {
-//					if(P.left == this) {
-//						P.left = null;
-//					} else {
-//						P.right = null; 
-//					}
-//				}
-//				mod.setTrue();
-//				return ;
 			} else {
 				if(left != null) {
 					element = left.element;
@@ -702,7 +700,6 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 					right = null;
 					mod.setTrue();
 				}
-				
 				return this;
 			}
 		}
