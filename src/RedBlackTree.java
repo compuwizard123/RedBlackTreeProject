@@ -149,10 +149,14 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		}
 		if(root != null) {
 			root = root.remove(item, mod);
+			if(root != null) {
+				root.setColor(Color.BLACK);
+			}
 		}
 		if(mod.getValue()) {
 			modCount++;
 		}
+		
 		return mod.getValue();
 	}
 	
@@ -364,8 +368,8 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			node.element = temp1.element;
 			node.left = temp2;
 			
-			node.setColor(nodeColor);
-			node.left.setColor(temp1.getColor());
+			//node.setColor(nodeColor);
+			//node.left.setColor(temp1.getColor());
 			
 			rotationCount++;
 			return node;
@@ -403,8 +407,8 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			node.element = temp1.element;
 			node.right = temp2;
 			
-			node.setColor(nodeColor);
-			node.right.setColor(temp1.getColor());
+			//node.setColor(nodeColor);
+			//node.right.setColor(temp1.getColor());
 			
 			rotationCount++;
 			return node;
@@ -434,36 +438,230 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		 * @return 	BinaryNode that is removed
 		 */
 		public BinaryNode remove(T item, modWrapper mod) {
-			if(left == null && right == null) {
-				if(item.compareTo(element) == 0) {
-					mod.setTrue();
-					return null;
+			return removeStep1(item, mod);
+		}
+		
+		private BinaryNode removeStep1(T item, modWrapper mod) {
+			if(left != null && left.getColor() == Color.BLACK && right != null && right.getColor() == Color.BLACK) {
+				this.setColor(Color.RED);
+				int compare = item.compareTo(element); 
+				if(compare == 0) {
+					return this.removeStep3(null, item, mod);
+				} else if(compare < 0) {
+					return left.removeStep2(this, item, mod);
+				} else {
+					return right.removeStep2(this, item, mod);
+				}
+			} else {
+				return this.removeStep2B(null, item, mod);
+			}
+		}
+		
+		private BinaryNode removeStep2(BinaryNode P, T item, modWrapper mod) {
+			if((left != null && left.getColor() == Color.RED) || (right != null && right.getColor() == Color.RED)) {
+				return this.removeStep2B(P, item, mod);
+			} else {
+				return this.removeStep2A(P, item, mod);
+				
+			}
+		}
+		
+		private BinaryNode removeStep2A(BinaryNode P, T item, modWrapper mod) {
+			BinaryNode S;
+			if(this == P.left){
+				S = P.right;
+				if((S.left != null && S.right != null && S.left.getColor() == Color.BLACK && S.right.getColor() == Color.BLACK) || (S.left == null && S.right == null)) {
+					return removeStep2A1(P, S, item, mod);
+				}
+				if(S.left.getColor() == Color.RED) {
+					return removeStep2A2(P, S, item, mod);
+				}
+				if(S.right.getColor() == Color.RED) {
+					return removeStep2A3(P, S, item, mod);
+				}
+				//if(S.left.getColor() == Color.RED && S.right.getColor() == Color.RED) {
+				return removeStep2A4(P, S, item, mod);
+				//}
+			} else {
+				S = P.left;
+				if((S.left != null && S.right != null && S.left.getColor() == Color.BLACK && S.right.getColor() == Color.BLACK) || (S.left == null && S.right == null)) {
+					return removeStep2A1(P, S, item, mod);
+				}
+				if(S.right != null && S.right.getColor() == Color.RED) {
+					return removeStep2A2(P, S, item, mod);
+				}
+				if(S.left != null && S.left.getColor() == Color.RED) {
+					return removeStep2A3(P, S, item, mod);
+				}
+				//if(S.left.getColor() == Color.RED && S.right.getColor() == Color.RED) {
+				return removeStep2A4(P, S, item, mod);
+				//}
+			}
+		}
+		
+		private BinaryNode removeStep2A1(BinaryNode P, BinaryNode S, T item, modWrapper mod) {
+			P.setColor(Color.BLACK);
+			this.setColor(Color.RED);
+			S.setColor(Color.RED);
+			int compare = item.compareTo(element);
+			if(compare == 0) {
+				return removeStep3(P, item, mod);
+			} else if(compare < 0) {
+				return left.removeStep2(this, item, mod);
+			} else {
+				return right.removeStep2(this, item, mod);
+			}
+		}
+		
+		private BinaryNode removeStep2A2(BinaryNode P, BinaryNode S, T item, modWrapper mod) {
+			if(P.right == S) {
+				P = doubleRightRotation(P);
+			} else {
+				P = doubleLeftRotation(P);
+			}
+			
+			P.setColor(Color.BLACK);
+			this.setColor(Color.RED);
+			
+			int compare = item.compareTo(element);
+			if(compare == 0) {
+				return removeStep3(P, item, mod);
+			} else if(compare < 0) {
+				return left.removeStep2(this, item, mod);
+			} else {
+				return right.removeStep2(this, item, mod);
+			}
+		}
+		
+		private BinaryNode removeStep2A3(BinaryNode P, BinaryNode S, T item, modWrapper mod) {
+			if(P.right == S) {
+				P = singleLeftRotation(P);
+				S.right.setColor(Color.BLACK);
+			} else {
+				P = singleRightRotation(P);
+				S.left.setColor(Color.BLACK);
+			}
+			P.setColor(Color.BLACK);
+			this.setColor(Color.RED);
+			S.setColor(Color.RED);
+			
+			int compare = item.compareTo(element);
+			if(compare == 0) {
+				return removeStep3(P, item, mod);
+			} else if(compare < 0) {
+				return left.removeStep2(this, item, mod);
+			} else {
+				return right.removeStep2(this, item, mod);
+			}
+		}
+		
+		private BinaryNode removeStep2A4(BinaryNode P, BinaryNode S, T item, modWrapper mod) {
+			return removeStep2A3(P, S, item, mod);
+		}
+		
+		private BinaryNode removeStep2B(BinaryNode P, T item, modWrapper mod) {
+			int compare = item.compareTo(element);
+			if(compare == 0) {
+				return removeStep3(P, item, mod);
+			} else if(compare < 0) {
+				if(left != null) {
+					if(left.getColor() == Color.RED) {
+						return left.removeStep2B1(this, item, mod);
+					} else {
+						return left.removeStep2B2(this, item, mod);
+					}
+				}
+			} else {
+				if(right != null) {
+					if(right.getColor() == Color.RED) {
+						return right.removeStep2B1(this, item, mod);
+					} else {
+						return right.removeStep2B2(this, item, mod);
+					}
+				}
+			}
+			return this;
+		}
+		
+		private BinaryNode removeStep2B1(BinaryNode P, T item, modWrapper mod) {
+			int compare = item.compareTo(element);
+			if(compare == 0) {
+				return removeStep3(P, item, mod);
+			} else if(compare < 0) {
+				if(left != null) {
+					return left.removeStep2(this, item, mod);
 				}
 				return this;
-			} else if(right == null) {
-				if(item.compareTo(element) < 0) {
-					left = left.remove(item, mod);
-				}
-				mod.setTrue();
-				return left;
-			} else if(left == null) {
-				if(item.compareTo(element) > 0) {
-					right = right.remove(item, mod);
-				}
-				mod.setTrue();
-				return right;
 			} else {
-				if(item.compareTo(element) > 0) {
-					right = right.remove(item,mod);
-				} else if(item.compareTo(element) < 0) {
-					left = left.remove(item, mod);
-				} else {
-					T temp = element;
-					BinaryNode largestChildNode = findLargestChild(left);
-					element = largestChildNode.element;
-					largestChildNode.element = temp;
-					left = left.remove(temp, mod);
+				if(right != null) {
+					return right.removeStep2(this, item, mod);
 				}
+				return this;
+			}
+		}
+
+		private BinaryNode removeStep2B2(BinaryNode P, T item, modWrapper mod) {
+			BinaryNode S = P;
+			if(P.left != null && P == this){
+				S = rotateLeftSimple(P);
+				P = S.left;
+			} else {
+				S = rotateRightSimple(P);
+				P = S.right;
+			}
+			S.setColor(Color.BLACK);
+			P.setColor(Color.RED);
+			return this.removeStep2(P, item, mod);
+		}
+		
+		private BinaryNode rotateLeftSimple(BinaryNode node) {
+			BinaryNode S = node.right;
+			BinaryNode P = node;
+			P.right = S.left;
+			node.right = S.right;
+			node.element = S.element;
+			node.left = P;
+			return node;
+		}
+		
+		private BinaryNode rotateRightSimple(BinaryNode node) {
+			BinaryNode S = node.left;
+			BinaryNode P = node;
+			P.left = S.right;
+			node.right = P;
+			node.element = S.element;
+			node.left = S.left;
+			return node;
+		}
+		
+		private BinaryNode removeStep3(BinaryNode P, T item, modWrapper mod) {
+			if(left != null && right != null) {
+				BinaryNode temp = findLargestChild(left);
+				root.removeStep2(null, temp.element, mod);
+				element = temp.element;
+				mod.setTrue();
+				return this;
+			} else if(left == null && right == null) {
+				if(P != null) {
+					if(P.left == this) {
+						P.left = null;
+					} else {
+						P.right = null; 
+					}
+				}
+				mod.setTrue();
+				return null;
+			} else {
+				if(left != null) {
+					element = left.element;
+					left = null;
+					mod.setTrue();
+				} else {
+					element = right.element;
+					right = null;
+					mod.setTrue();
+				}
+				
 				return this;
 			}
 		}
