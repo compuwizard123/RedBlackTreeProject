@@ -414,7 +414,6 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 		public BinaryNode doubleRightRotation(BinaryNode node) {
 			singleRightRotation(node.right);
 			singleLeftRotation(node);
-
 			return node;
 		}
 		
@@ -467,7 +466,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 				if((S.left != null && S.right != null && S.left.getColor() == Color.BLACK && S.right.getColor() == Color.BLACK) || (S.left == null && S.right == null)) {
 					return this.removeStep2A1(P, S, item, mod);
 				}
-				if(S.left != null && S.left.getColor() == Color.RED) {
+				if(S.left != null && S.left.getColor() == Color.RED && ((S.right != null && S.right.getColor() == Color.BLACK) || (S.right == null))) {
 					P = this.removeStep2A2(P, S, item, mod);
 					return P.left;
 				}
@@ -483,7 +482,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 				if((S.left != null && S.right != null && S.left.getColor() == Color.BLACK && S.right.getColor() == Color.BLACK) || (S.left == null && S.right == null)) {
 					return this.removeStep2A1(P, S, item, mod);
 				}
-				if(S.right != null && S.right.getColor() == Color.RED) {
+				if(S.right != null && S.right.getColor() == Color.RED && ((S.left != null && S.left.getColor() == Color.BLACK) || (S.left == null))) {
 					P = this.removeStep2A2(P, S, item, mod);
 					return P.right;
 				}
