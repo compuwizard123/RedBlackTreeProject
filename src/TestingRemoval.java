@@ -953,7 +953,7 @@ public class TestingRemoval extends TestCase {
 //				System.out.println(rcc-rc);
 //			}
 		}
-		assertEquals(31, b.getRotationCount());
+		assertEquals(57, b.getRotationCount());
 //		System.out.println(b.getRotationCount());
 //		System.out.println("End testing");	
 		points += 6;
@@ -990,7 +990,7 @@ public class TestingRemoval extends TestCase {
 //				System.out.println(rcc-rc);
 //			}
 		}
-		assertEquals(31, b.getRotationCount());
+		assertEquals(57, b.getRotationCount());
 //		System.out.println(b.getRotationCount());
 //		System.out.println("End testing");	
 		points += 6;

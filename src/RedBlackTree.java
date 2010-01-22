@@ -656,6 +656,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			node.right = S.right;
 			node.element = S.element;
 			node.left = P;
+			rotationCount++;
 			return node;
 		}
 		
@@ -667,6 +668,7 @@ public class RedBlackTree<T extends Comparable<? super T>> implements Iterable<R
 			node.right = P;
 			node.element = S.element;
 			node.left = S.left;
+			rotationCount++;
 			return node;
 		}
 		
